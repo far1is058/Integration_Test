@@ -13,5 +13,10 @@
 
 int main () {
 
+	String S = "";
+	assert(S.length()==0);
+	//assert(S.capacity()==0;
+	//assert(S[0]=='\0');
+	
     return 0;
 }
