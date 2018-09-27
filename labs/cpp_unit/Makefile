@@ -24,8 +24,8 @@ tests: test_driver
 # Compile all tests
 #
 
-test_driver: test_driver.cpp string.o # REMOVE This and add test hpp.cpp
-	$(CPP) $(OPTIONS) -I /usr/include/cppunit/ -o test_driver -lcppunit string.o test_driver.cpp # add cpp files here
+test_driver: test_driver.cpp string.o test_default_ctor.hpp test_default_ctor.cpp test_cstring_ctor.hpp test_cstring_ctor.cpp test_equality.hpp test_equality.cpp
+	$(CPP) $(OPTIONS) -I /usr/include/cppunit/ -o test_driver -lcppunit string.o test_driver.cpp test_default_ctor.cpp test_cstring_ctor.cpp test_equality.cpp
 
 clean:
 	rm -f test_driver
