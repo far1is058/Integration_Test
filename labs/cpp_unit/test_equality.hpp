@@ -28,6 +28,7 @@ public:
 
     void test_typical() {
 	CPPUNIT_ASSERT(*abc == "abc");
+	CPPUNIT_ASSERT(*xyz == "xyz");
     }
 
     void test_typical_not() {

@@ -21,6 +21,7 @@ class test_default_ctor : public CppUnit::TestFixture {
     void test_typical() {
 	String s;
 	CPPUNIT_ASSERT(s.length() == 0);
+	CPPUNIT_ASSERT(s.capacity() == (STRING_SIZE - 1));
     }
 
     CPPUNIT_TEST_SUITE(test_default_ctor);

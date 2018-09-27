@@ -18,9 +18,28 @@ class test_cstring_ctor : public CppUnit::TestFixture {
 	CPPUNIT_ASSERT(s[2] == 'c');
 	CPPUNIT_ASSERT(s.length() == 3);
     }
+	
+    void test_boundary() {
+	String s("abc");
+
+        CPPUNIT_ASSERT(s[0] == 'a');
+        CPPUNIT_ASSERT(s[2] == 'c');
+
+    }
+    
+    void test_empty() {
+        String s("");
+
+        CPPUNIT_ASSERT(s.length()== 0);
+        
+
+    }
+
 
     CPPUNIT_TEST_SUITE(test_cstring_ctor);
     CPPUNIT_TEST(test_typical);
+    CPPUNIT_TEST(test_boundary);
+    CPPUNIT_TEST(test_empty);
     CPPUNIT_TEST_SUITE_END();
 
 };
