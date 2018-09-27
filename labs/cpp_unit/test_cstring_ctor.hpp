@@ -35,11 +35,24 @@ class test_cstring_ctor : public CppUnit::TestFixture {
 
     }
 
+    void test_concatin() {
+        String left("abc");
+	String right("xyz");
+	String result = left + right;
+
+        CPPUNIT_ASSERT(left == "abc");
+        CPPUNIT_ASSERT(right == "xyz");
+	CPPUNIT_ASSERT(result == "abcxyz");
+	CPPUNIT_ASSERT(result.length() == 6);
+	CPPUNIT_ASSERT(result.capacity() >= STRING_SIZE-1);
+    }
+
 
     CPPUNIT_TEST_SUITE(test_cstring_ctor);
     CPPUNIT_TEST(test_typical);
     CPPUNIT_TEST(test_boundary);
     CPPUNIT_TEST(test_empty);
+    CPPUNIT_TEST(test_concatin);
     CPPUNIT_TEST_SUITE_END();
 
 };

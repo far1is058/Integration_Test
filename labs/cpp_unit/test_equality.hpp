@@ -35,9 +35,18 @@ public:
 	CPPUNIT_ASSERT(!(*abc == *xyz));
     }
 
+     void test_result() {
+	String lhs = *abc;
+	String rhs = *xyz;
+	String result = lhs + rhs;
+        CPPUNIT_ASSERT(result.length() == 6);
+	CPPUNIT_ASSERT(result.capacity() == STRING_SIZE-1);        
+    }
+
     CPPUNIT_TEST_SUITE(test_equality);
     CPPUNIT_TEST(test_typical);
     CPPUNIT_TEST(test_typical_not);
+    CPPUNIT_TEST(test_result);
     CPPUNIT_TEST_SUITE_END();
 
 };
