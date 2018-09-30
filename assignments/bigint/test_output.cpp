@@ -17,7 +17,9 @@ int main() {
     		std::cout<< c <<std::endl;
 	else
 		std::cout<<"a*b != 12"<<std::endl;
-    }
+    	
+	assert(a*b == 12);
+	}
 
 
     {
