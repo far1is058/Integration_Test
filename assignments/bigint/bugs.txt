@@ -1,0 +1,6 @@
+1- test_int_ctor.cpp:47: int main(): Assertion `b == bigint("2147483647")' failed.
+make: *** [tests] Aborted (core dumped)
+
+2- 
+
+3- 
