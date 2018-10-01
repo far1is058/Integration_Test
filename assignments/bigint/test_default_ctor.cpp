@@ -27,6 +27,19 @@ int main() {
   {
 
     // setup
+    bigint b(2147483647);
+    bigint a;
+    // test
+        a = 2147483647;
+    // verification
+    assert(b==a);
+
+  }
+
+
+  {
+
+    // setup
     bigint b;
     
     // test
