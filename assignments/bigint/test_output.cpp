@@ -7,24 +7,38 @@ int main() {
   
    {
 	//Setup
-    	
-	std::stringstream c;
-	c << "";
+    	bigint b(111);
+	std::ostringstream c;
+	c << b;
 	//Test
 	
 	
 	//Varification
 	
     	
-	assert(c.str().empty());
+	assert(!(c.str().empty()));
     }
 
 
      {
         //Setup
-
+	bigint b;
         std::stringstream c;
-        c << "123456789";
+        c << b;
+        //Test
+
+
+        //Varification
+
+
+        assert(c.str().empty());
+    }
+
+    {
+        //Setup
+	bigint b("123456789");
+        std::stringstream c;
+        c << b;
         //Test
 
 
@@ -32,20 +46,6 @@ int main() {
 
 
         assert(c.str()=="123456789");
-    }
-
-    {
-        //Setup
-
-        std::stringstream c;
-        c << "123456789015487";
-        //Test
-
-
-        //Varification
-
-
-        assert(c.str()=="123456789015487");
     }
 
 

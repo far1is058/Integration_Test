@@ -15,7 +15,7 @@
 CPP  = clang++
 OPTS = -g -Wall -W -Wunused -Wuninitialized -Wshadow -std=c++11
 
-TESTS = test_default_ctor test_int_ctor test_subscript test_output
+TESTS = test_default_ctor test_int_ctor test_subscript test_output test_cstring_ctor
 
 ###############################################################
 # The first rule is run if only make is typed
@@ -35,6 +35,7 @@ tests: $(TESTS)
 	./test_int_ctor
 	./test_subscript
 	./test_output
+	./test_cstring_ctor
 ###############################################################
 # Compile and run all tests - uses a wild card.
 test_%: bigint.o test_%.o

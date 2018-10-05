@@ -1,6 +1,10 @@
 1- test_int_ctor.cpp:47: int main(): Assertion `b == bigint("2147483647")' failed.
 make: *** [tests] Aborted (core dumped)
+Note: The maximum can integer posive (32bit) can go up to
 
-2- 
+2-test_cstring_ctor.cpp:46:14: warning: implicit conversion from 'unsigned long long' to 'int' changes value from 13399722918938673152 to 0 
+[-Wconstant-conversion]
+    bigint b(10000000000000000000000000000000000000000);
+Note: I think there is a bug in this class as it should accept up to 50 digits 
 
 3- 
