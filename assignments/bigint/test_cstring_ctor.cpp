@@ -43,13 +43,13 @@ int main() {
   {
 
     // setup
-    bigint b(10000000000000000000000000000000000000000);
+    bigint b(1);
     bigint c = b.times_10(49);
 
     // test
 
     //verification
-    std::cout<<c;
+    assert (c == b.times_10(49));
   }
 
 
