@@ -1,0 +1,21 @@
+File:    test_concat.cpp
+Result:
+ 	function String::capacity:100.00
+	function String::length:100.00
+	function String::operator+:100.00
+	function String::operator==:100.00
+	function main:     100.00
+	function operator<<:100.00
+
+Answer: 
+	
+	
+
+
+----------------------------------------------------
+File:	test_equality.cpp
+Result:
+	function String::operator==:66.67
+	function main:     100.00
+	
+Answer:
