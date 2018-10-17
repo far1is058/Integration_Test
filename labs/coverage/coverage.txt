@@ -8,7 +8,8 @@ Result:
 	function operator<<:100.00
 
 Answer: 
-	
+It is a good testing as it is 100%
+It seems fully tested the file	
 	
 
 
@@ -19,3 +20,5 @@ Result:
 	function main:     100.00
 	
 Answer:
+It is not as only test one case of the Empty() < 90%
+
