@@ -244,8 +244,13 @@ void syntax_tree::main_report(std::vector<std::string> & coverage_names) {
     // WRITE THIS FUNCTION	     
 
 	std::list<syntax_tree*>::iterator index = children.begin();
-	std::list<syntax_tree*>::iterator index1 =  children.begin();
+	std::list<syntax_tree*>::iterator itr = get_child("function")->get_child("block")->children.begin();	 
 	
+
+	
+
+        
+
 
         // Iterate until I find a function!
         while ((*index)->tag != "function") {
@@ -260,13 +265,25 @@ void syntax_tree::main_report(std::vector<std::string> & coverage_names) {
 	while ((*index)->tag == "function"){
 	
 		if((*index)->get_child("name")->get_name() == "main"){
+					
+		 	while((*itr)->tag != "return"){
 	
-		 
-			(*index)->get_child("return");//->get_child("expr_aks");
+				++itr;		
+
+
+			}
 			
-			children.insert(index,new syntax_tree(token, "\nFaris A\n"));
+
+
 			
-			break;		
+				if ((*itr)->tag == "return"){
+			
+					children.insert(itr, new syntax_tree(token, coverage_names[0]+".print();"+coverage_names[1]+".print();"));
+					break;
+				}
+
+					
+					
 		} 
 
 
