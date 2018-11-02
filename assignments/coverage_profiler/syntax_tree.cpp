@@ -261,11 +261,10 @@ void syntax_tree::main_report(std::vector<std::string> & coverage_names) {
 	
 		if((*index)->get_child("name")->get_name() == "main"){
 	
-		 	(*index1)->get_child("function");
-			(*index1)->get_child("block");
-			(*index1)->get_child("return");
-			//(*index1)->get_child("expr");
-			children.insert(index1,new syntax_tree(token, "\nFaris A\n"));
+		 
+			(*index)->get_child("return");//->get_child("expr_aks");
+			
+			children.insert(index,new syntax_tree(token, "\nFaris A\n"));
 			
 			break;		
 		} 
