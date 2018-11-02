@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" xmlns:cpp="http://www.srcML.org/srcML/cpp" revision="1.0.0" language="C++" filename="simple_main.cpp"><comment type="line" format="doxygen">/// @file main1.cpp</comment>
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>&lt;iostream&gt;</cpp:file></cpp:include>
+
+<function><type><name>int</name></type> <name>main</name><parameter_list>()</parameter_list> <block>{
+  <decl_stmt><decl><type><name>int</name></type> <name>i</name></decl>;</decl_stmt>
+  <expr_stmt><expr><name>i</name> <operator>=</operator> <literal type="number">0</literal></expr>;</expr_stmt>
+  <while>while <condition>(<expr><name>i</name> <operator>&lt;</operator> <literal type="number">10</literal></expr>)</condition> <block>{   
+    <expr_stmt><expr><operator>++</operator><name>i</name></expr>;</expr_stmt>   
+    <expr_stmt><expr><name><name>std</name><operator>::</operator><name>cout</name></name> <operator>&lt;&lt;</operator> <name>i</name></expr>;</expr_stmt>
+  }</block></while>
+  <expr_stmt><expr><name><name>std</name><operator>::</operator><name>cout</name></name> <operator>&lt;&lt;</operator> <literal type="char">'\n'</literal></expr>;</expr_stmt>
+  <return>return <expr><literal type="number">0</literal></expr>;</return>
+}</block></function> </unit>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" xmlns:cpp="http://www.srcML.org/srcML/cpp" revision="1.0.0" language="C++" filename="bigint.cpp"><cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>"bigint.hpp"</cpp:file></cpp:include>
+
+<constructor><name><name>bigint</name><operator>::</operator><name>bigint</name></name><parameter_list>()</parameter_list> <block>{
+  
+  <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&lt;</operator> <name>MAX_DIGITS</name></expr>;</condition> <incr><expr><operator>++</operator><name>i</name></expr></incr>)</control> <block>{
+    <expr_stmt><expr><name><name>digits</name><index>[<expr><name>i</name></expr>]</index></name> <operator>=</operator> <literal type="number">0</literal></expr>;</expr_stmt>
+  }</block></for>
+
+}</block></constructor>
+
+<constructor><name><name>bigint</name><operator>::</operator><name>bigint</name></name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>number</name></decl></parameter>)</parameter_list><member_init_list>:<call><name>bigint</name><argument_list>()</argument_list></call> </member_init_list><block>{
+
+  <decl_stmt><decl><type><name>int</name></type> <name>bigintPos</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+  <decl_stmt><decl><type><name>int</name></type> <name>nextDigit</name> <init>= <expr><name>number</name></expr></init></decl>;</decl_stmt>
+
+  <while>while <condition>(<expr><name>nextDigit</name> <operator>!=</operator> <literal type="number">0</literal></expr>)</condition> <block>{
+    <expr_stmt><expr><name><name>digits</name><index>[<expr><name>bigintPos</name></expr>]</index></name> <operator>=</operator> <name>nextDigit</name> <operator>%</operator> <literal type="number">10</literal></expr>;</expr_stmt>
+    <expr_stmt><expr><name>nextDigit</name> <operator>/=</operator> <literal type="number">10</literal></expr>;</expr_stmt>
+    <expr_stmt><expr><operator>++</operator><name>bigintPos</name></expr>;</expr_stmt>
+  }</block></while>
+}</block></constructor>
+
+<constructor><name><name>bigint</name><operator>::</operator><name>bigint</name></name><parameter_list>(<parameter><decl><type><specifier>const</specifier> <name>char</name> <modifier>*</modifier></type> <name>cString</name></decl></parameter>)</parameter_list> <member_init_list>: <call><name>bigint</name><argument_list>()</argument_list></call> </member_init_list><block>{
+
+  <decl_stmt><decl><type><name>int</name></type> <name>stringPos</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+  <while>while <condition>(<expr><name><name>cString</name><index>[<expr><name>stringPos</name></expr>]</index></name> <operator>!=</operator> <literal type="char">'\0'</literal></expr>)</condition> <block>{
+    <expr_stmt><expr><operator>++</operator><name>stringPos</name></expr>;</expr_stmt>
+  }</block></while>
+
+  <decl_stmt><decl><type><name>int</name></type> <name>bigintPos</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+  <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><name>stringPos</name> <operator>-</operator> <literal type="number">1</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&gt;=</operator> <literal type="number">0</literal></expr>;</condition> <incr><expr><operator>--</operator><name>i</name></expr></incr>)</control> <block>{
+    <if_stmt><if>if<condition>(<expr><name>bigintPos</name> <operator>&gt;=</operator> <name>MAX_DIGITS</name></expr>)</condition> <block>{
+      <break>break;</break>
+    }</block></if></if_stmt>
+    <expr_stmt><expr><name><name>digits</name><index>[<expr><name>bigintPos</name></expr>]</index></name> <operator>=</operator> <name><name>cString</name><index>[<expr><name>i</name></expr>]</index></name> <operator>-</operator> <literal type="char">'0'</literal></expr>;</expr_stmt>
+    <expr_stmt><expr><operator>++</operator><name>bigintPos</name></expr>;</expr_stmt>
+  }</block></for>
+
+}</block></constructor>
+
+<function><type><name>bool</name></type> <name><name>bigint</name><operator>::</operator><name>operator<name>==</name></name></name><parameter_list>(<parameter><decl><type><specifier>const</specifier> <name>bigint</name><modifier>&amp;</modifier></type> <name>lhs</name></decl></parameter>)</parameter_list> <specifier>const</specifier> <block>{
+
+  <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&lt;</operator> <name>MAX_DIGITS</name></expr>;</condition> <incr><expr><operator>++</operator><name>i</name></expr></incr>)</control> <block>{
+    <if_stmt><if>if <condition>(<expr><name><name>digits</name><index>[<expr><name>i</name></expr>]</index></name> <operator>!=</operator> <name><name>lhs</name><operator>.</operator><name>digits</name><index>[<expr><name>i</name></expr>]</index></name></expr>)</condition> <block>{
+      <return>return <expr><literal type="boolean">false</literal></expr>;</return>
+    }</block></if></if_stmt>
+  }</block></for>
+  <return>return <expr><literal type="boolean">true</literal></expr>;</return>
+}</block></function>
+
+<function><type><name>void</name></type> <name><name>bigint</name><operator>::</operator><name>debug_print</name></name><parameter_list>(<parameter><decl><type><name><name>std</name><operator>::</operator><name>ostream</name></name><modifier>&amp;</modifier></type> <name>out</name></decl></parameter>)</parameter_list> <block>{
+  <expr_stmt><expr><name>out</name> <operator>&lt;&lt;</operator> <literal type="string">"| "</literal></expr>;</expr_stmt>
+  <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><name>MAX_DIGITS</name> <operator>-</operator> <literal type="number">1</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&gt;=</operator> <literal type="number">0</literal></expr>;</condition> <incr><expr><operator>--</operator><name>i</name></expr></incr>)</control> <block>{
+    <expr_stmt><expr><name>out</name> <operator>&lt;&lt;</operator> <name><name>digits</name><index>[<expr><name>i</name></expr>]</index></name> <operator>&lt;&lt;</operator> <literal type="string">" | "</literal></expr>;</expr_stmt>
+  }</block></for>
+}</block></function>
+
+<function><type><name><name>std</name><operator>::</operator><name>ostream</name></name><modifier>&amp;</modifier></type> <name>operator<name>&lt;&lt;</name></name><parameter_list>(<parameter><decl><type><name><name>std</name><operator>::</operator><name>ostream</name></name><modifier>&amp;</modifier></type> <name>out</name></decl></parameter>, <parameter><decl><type><specifier>const</specifier> <name>bigint</name><modifier>&amp;</modifier></type> <name>bigNumber</name></decl></parameter>)</parameter_list> <block>{
+  <decl_stmt><decl><type><name>bool</name></type> <name>foundDigits</name> <init>= <expr><literal type="boolean">false</literal></expr></init></decl>;</decl_stmt>
+  <decl_stmt><decl><type><name>int</name></type> <name>digitsPerLine</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+  
+  <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><name><name>bigint</name><operator>::</operator><name>MAX_DIGITS</name></name> <operator>-</operator> <literal type="number">1</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&gt;</operator> <literal type="number">0</literal></expr>;</condition> <incr><expr><operator>--</operator><name>i</name></expr></incr>)</control> <block>{
+
+    <if_stmt><if>if <condition>(<expr><operator>!</operator><name>foundDigits</name></expr>)</condition> <block>{
+      <expr_stmt><expr><name>foundDigits</name> <operator>=</operator> <operator>(</operator><name><name>bigNumber</name><operator>.</operator><name>digits</name><index>[<expr><name>i</name></expr>]</index></name> <operator>!=</operator> <literal type="number">0</literal><operator>)</operator></expr>;</expr_stmt>
+    }</block></if></if_stmt>
+
+    <if_stmt><if>if <condition>(<expr><name>foundDigits</name></expr>)</condition> <block>{
+      <expr_stmt><expr><name>out</name> <operator>&lt;&lt;</operator> <name><name>bigNumber</name><operator>.</operator><name>digits</name><index>[<expr><name>i</name></expr>]</index></name></expr>;</expr_stmt>
+      <expr_stmt><expr><operator>++</operator><name>digitsPerLine</name></expr>;</expr_stmt>
+      <if_stmt><if>if <condition>(<expr><name>digitsPerLine</name> <operator>==</operator> <literal type="number">70</literal></expr>)</condition> <block>{
+        <expr_stmt><expr><name>out</name> <operator>&lt;&lt;</operator> <literal type="char">'\n'</literal></expr>;</expr_stmt>
+        <expr_stmt><expr><name>digitsPerLine</name> <operator>=</operator> <literal type="number">0</literal></expr>;</expr_stmt>
+      }</block></if></if_stmt>
+    }</block></if></if_stmt>
+  }</block></for>
+
+  <expr_stmt><expr><name>out</name> <operator>&lt;&lt;</operator> <name><name>bigNumber</name><operator>.</operator><name>digits</name><index>[<expr><literal type="number">0</literal></expr>]</index></name></expr>;</expr_stmt>
+  
+  <return>return <expr><name>out</name></expr>;</return>
+}</block></function>
+
+<function><type><name>int</name></type> <name><name>bigint</name><operator>::</operator><name>operator<name>[]</name></name></name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>index</name></decl></parameter>)</parameter_list> <specifier>const</specifier> <block>{
+  <return>return <expr><name><name>digits</name><index>[<expr><name>index</name></expr>]</index></name></expr>;</return>
+}</block></function>
+
+<function><type><name>bigint</name></type> <name>operator<name>+</name></name><parameter_list>(<parameter><decl><type><name>bigint</name></type> <name>lhs</name></decl></parameter>, <parameter><decl><type><specifier>const</specifier> <name>bigint</name> <modifier>&amp;</modifier></type> <name>rhs</name></decl></parameter>)</parameter_list> <block>{ 
+  <decl_stmt><decl><type><name>bigint</name></type> <name>sum</name></decl>;</decl_stmt>
+  <decl_stmt><decl><type><name>int</name></type> <name>carry</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+
+  <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&lt;</operator> <name><name>bigint</name><operator>::</operator><name>MAX_DIGITS</name></name></expr>;</condition> <incr><expr><operator>++</operator><name>i</name></expr></incr>)</control> <block>{
+    <decl_stmt><decl><type><name>int</name></type> <name>temp</name> <init>= <expr><operator>(</operator><name><name>lhs</name><operator>.</operator><name>digits</name><index>[<expr><name>i</name></expr>]</index></name> <operator>+</operator> <name><name>rhs</name><operator>.</operator><name>digits</name><index>[<expr><name>i</name></expr>]</index></name> <operator>+</operator> <name>carry</name><operator>)</operator></expr></init></decl>;</decl_stmt> 
+    <expr_stmt><expr><name><name>sum</name><operator>.</operator><name>digits</name><index>[<expr><name>i</name></expr>]</index></name> <operator>=</operator> <name>temp</name> <operator>%</operator> <literal type="number">10</literal></expr>;</expr_stmt>
+    <expr_stmt><expr><name>carry</name> <operator>=</operator> <name>temp</name> <operator>/</operator> <literal type="number">10</literal></expr>;</expr_stmt>
+  }</block></for>
+
+  <return>return <expr><name>sum</name></expr>;</return>
+}</block></function>
+
+<function><type><name><name>std</name><operator>::</operator><name>istream</name></name><modifier>&amp;</modifier></type> <name>operator<name>&gt;&gt;</name></name><parameter_list>(<parameter><decl><type><name><name>std</name><operator>::</operator><name>istream</name></name><modifier>&amp;</modifier></type> <name>in</name></decl></parameter>, <parameter><decl><type><name>bigint</name><modifier>&amp;</modifier></type> <name>bigData</name></decl></parameter>)</parameter_list> <block>{
+  <decl_stmt><decl><type><name>char</name></type> <name><name>arr</name><index>[<expr><name><name>bigint</name><operator>::</operator><name>MAX_DIGITS</name></name> <operator>+</operator> <literal type="number">1</literal></expr>]</index></name></decl>;</decl_stmt>
+  
+  <decl_stmt><decl><type><name>int</name></type> <name>index</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+  <decl_stmt><decl><type><name>char</name></type> <name>data</name></decl>;</decl_stmt>
+  <while>while <condition>(<expr><name>in</name> <operator>&gt;&gt;</operator> <name>data</name> <operator>&amp;&amp;</operator> <name>data</name> <operator>!=</operator> <literal type="char">';'</literal></expr>)</condition> <block>{
+    <expr_stmt><expr><name><name>arr</name><index>[<expr><name>index</name></expr>]</index></name> <operator>=</operator> <name>data</name></expr>;</expr_stmt>
+    <expr_stmt><expr><operator>++</operator><name>index</name></expr>;</expr_stmt>
+  }</block></while>
+
+  <expr_stmt><expr><name><name>arr</name><index>[<expr><name>index</name></expr>]</index></name> <operator>=</operator> <literal type="char">'\0'</literal></expr>;</expr_stmt>
+
+  <decl_stmt><decl><type><name>bigint</name></type> <name>temp</name><argument_list>(<argument><expr><name>arr</name></expr></argument>)</argument_list></decl>;</decl_stmt>
+  <expr_stmt><expr><name>bigData</name> <operator>=</operator> <name>temp</name></expr>;</expr_stmt>
+
+  <return>return <expr><name>in</name></expr>;</return>
+}</block></function>
+
+<function><type><name>bigint</name></type> <name><name>bigint</name><operator>::</operator><name>times_digit</name></name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>digit</name></decl></parameter>)</parameter_list> <specifier>const</specifier> <block>{
+  <decl_stmt><decl><type><name>bigint</name></type> <name>result</name></decl>;</decl_stmt>
+  <decl_stmt><decl><type><name>int</name></type> <name>carry</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+  
+  <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&lt;</operator> <name>MAX_DIGITS</name></expr>;</condition> <incr><expr><operator>++</operator><name>i</name></expr></incr>)</control> <block>{
+    <decl_stmt><decl><type><name>int</name></type> <name>temp</name> <init>= <expr><operator>(</operator><name><name>digits</name><index>[<expr><name>i</name></expr>]</index></name> <operator>*</operator> <name>digit</name><operator>)</operator> <operator>+</operator> <name>carry</name></expr></init></decl>;</decl_stmt>
+    <expr_stmt><expr><name><name>result</name><operator>.</operator><name>digits</name><index>[<expr><name>i</name></expr>]</index></name> <operator>=</operator> <name>temp</name> <operator>%</operator> <literal type="number">10</literal></expr>;</expr_stmt>
+    <expr_stmt><expr><name>carry</name> <operator>=</operator> <name>temp</name> <operator>/</operator> <literal type="number">10</literal></expr>;</expr_stmt>
+  }</block></for>
+
+  <return>return <expr><name>result</name></expr>;</return>
+}</block></function>
+
+<function><type><name>bigint</name></type> <name><name>bigint</name><operator>::</operator><name>times_10</name></name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>offset</name></decl></parameter>)</parameter_list> <specifier>const</specifier> <block>{
+  <decl_stmt><decl><type><name>bigint</name></type> <name>result</name></decl>;</decl_stmt>
+  <decl_stmt><decl><type><name>int</name></type> <name>index</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</decl_stmt>
+  
+  <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><name>offset</name></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&lt;</operator> <name>MAX_DIGITS</name></expr>;</condition> <incr><expr><operator>++</operator><name>i</name></expr></incr>)</control> <block>{
+    <expr_stmt><expr><name><name>result</name><operator>.</operator><name>digits</name><index>[<expr><name>i</name></expr>]</index></name> <operator>=</operator> <name><name>digits</name><index>[<expr><name>index</name></expr>]</index></name></expr>;</expr_stmt>
+    <expr_stmt><expr><operator>++</operator><name>index</name></expr>;</expr_stmt>
+  }</block></for>
+  <return>return <expr><name>result</name></expr>;</return>
+}</block></function>
+
+<function><type><name>bigint</name></type> <name>operator<name>*</name></name><parameter_list>(<parameter><decl><type><name>bigint</name></type> <name>lhs</name></decl></parameter>, <parameter><decl><type><specifier>const</specifier> <name>bigint</name> <modifier>&amp;</modifier></type> <name>rhs</name></decl></parameter>)</parameter_list> <block>{
+
+  <decl_stmt><decl><type><name>bigint</name></type> <name>product</name></decl>;</decl_stmt>
+  <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&lt;</operator> <name><name>bigint</name><operator>::</operator><name>MAX_DIGITS</name></name></expr>;</condition> <incr><expr><operator>++</operator><name>i</name></expr></incr>)</control> <block>{
+    <decl_stmt><decl><type><name>bigint</name></type> <name>temp</name> <init>= <expr><call><name><name>lhs</name><operator>.</operator><name>times_digit</name></name><argument_list>(<argument><expr><name><name>rhs</name><operator>.</operator><name>digits</name><index>[<expr><name>i</name></expr>]</index></name></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+    <expr_stmt><expr><name>product</name> <operator>=</operator> <name>product</name> <operator>+</operator> <call><name><name>temp</name><operator>.</operator><name>times_10</name></name><argument_list>(<argument><expr><name>i</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+  }</block></for>
+
+  <return>return <expr><name>product</name></expr>;</return>
+}</block></function>
+
+</unit>

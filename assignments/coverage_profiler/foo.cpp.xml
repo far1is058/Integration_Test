@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" xmlns:cpp="http://www.srcML.org/srcML/cpp" revision="1.0.0" language="C++" filename="foo.cpp"><comment type="line" format="doxygen">/// @file foo.cpp</comment>
+
+<function><type><name>int</name></type> <name>foo</name><parameter_list>()</parameter_list> <block>{
+  <decl_stmt><decl><type><name>int</name></type> <name>i</name></decl>;</decl_stmt>
+  <expr_stmt><expr><name>i</name> <operator>=</operator> <literal type="number">0</literal></expr>;</expr_stmt>
+  <return>return <expr><name>i</name></expr>;</return>
+}</block></function> </unit>

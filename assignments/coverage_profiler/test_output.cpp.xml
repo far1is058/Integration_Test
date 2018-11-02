@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" xmlns:cpp="http://www.srcML.org/srcML/cpp" revision="1.0.0" language="C++" filename="test_output.cpp"><comment type="line">// bigint Test Program</comment>
+<comment type="line">//</comment>
+<comment type="line">// Tests:  testing oracle for subscript</comment>
+<comment type="line">//</comment>
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>&lt;iostream&gt;</cpp:file></cpp:include>
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>&lt;cassert&gt;</cpp:file></cpp:include>
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>&lt;sstream&gt;</cpp:file></cpp:include>
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>"bigint.hpp"</cpp:file></cpp:include>
+
+<comment type="line">//===========================================================================</comment>
+<function><type><name>int</name></type> <name>main</name><parameter_list>()</parameter_list> <block>{
+    
+    <comment type="line">// 0 test</comment>
+    <block>{
+        <comment type="line">// Setup</comment>
+        <decl_stmt><decl><type><name>bigint</name></type> <name>bi</name></decl>;</decl_stmt>
+
+        <comment type="line">// Test </comment>
+        <decl_stmt><decl><type><name><name>std</name><operator>::</operator><name>ostringstream</name></name></type> <name>out</name></decl>;</decl_stmt>
+        <expr_stmt><expr><name>out</name> <operator>&lt;&lt;</operator> <name>bi</name></expr>;</expr_stmt>
+
+        <comment type="line">// Verify</comment>
+        <expr_stmt><expr><call><name>assert</name><argument_list>(<argument><expr><call><name><name>out</name><operator>.</operator><name>str</name></name><argument_list>()</argument_list></call> <operator>==</operator> <literal type="string">"0"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+    }</block>
+
+    <comment type="line">// 1 digit</comment>
+    <block>{
+        <comment type="line">// Setup</comment>
+        <decl_stmt><decl><type><name>bigint</name></type> <name>bi</name><argument_list>(<argument><expr><literal type="number">1</literal></expr></argument>)</argument_list></decl>;</decl_stmt>
+
+        <comment type="line">// Test </comment>
+        <decl_stmt><decl><type><name><name>std</name><operator>::</operator><name>ostringstream</name></name></type> <name>out</name></decl>;</decl_stmt>
+        <expr_stmt><expr><name>out</name> <operator>&lt;&lt;</operator> <name>bi</name></expr>;</expr_stmt>
+
+        <comment type="line">// Verify</comment>
+        <expr_stmt><expr><call><name>assert</name><argument_list>(<argument><expr><call><name><name>out</name><operator>.</operator><name>str</name></name><argument_list>()</argument_list></call> <operator>==</operator> <literal type="string">"1"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+    }</block>
+
+    <comment type="line">// typical</comment>
+    <block>{
+        <comment type="line">// Setup</comment>
+        <decl_stmt><decl><type><name>bigint</name></type> <name>bi</name><argument_list>(<argument><expr><literal type="string">"1234567890"</literal></expr></argument>)</argument_list></decl>;</decl_stmt>
+
+        <comment type="line">// Test </comment>
+        <decl_stmt><decl><type><name><name>std</name><operator>::</operator><name>ostringstream</name></name></type> <name>out</name></decl>;</decl_stmt>
+        <expr_stmt><expr><name>out</name> <operator>&lt;&lt;</operator> <name>bi</name></expr>;</expr_stmt>
+
+        <comment type="line">// Verify</comment>
+        <expr_stmt><expr><call><name>assert</name><argument_list>(<argument><expr><call><name><name>out</name><operator>.</operator><name>str</name></name><argument_list>()</argument_list></call> <operator>==</operator> <literal type="string">"1234567890"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+    }</block>
+
+    <comment type="line">// 49 digit (MAX - 1)</comment>
+    <block>{
+        <comment type="line">// Setup</comment>
+        <decl_stmt><decl><type><name>bigint</name></type> <name>bi</name><argument_list>(<argument><expr><literal type="string">"1234567890123456789012345678901234567890123456789"</literal></expr></argument>)</argument_list></decl>;</decl_stmt>
+
+        <comment type="line">// Test </comment>
+        <decl_stmt><decl><type><name><name>std</name><operator>::</operator><name>ostringstream</name></name></type> <name>out</name></decl>;</decl_stmt>
+        <expr_stmt><expr><name>out</name> <operator>&lt;&lt;</operator> <name>bi</name></expr>;</expr_stmt>
+
+        <comment type="line">// Verify</comment>
+        <expr_stmt><expr><call><name>assert</name><argument_list>(<argument><expr><call><name><name>out</name><operator>.</operator><name>str</name></name><argument_list>()</argument_list></call> <operator>==</operator> <literal type="string">"1234567890123456789012345678901234567890123456789"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+    }</block>
+
+    <comment type="line">// 50 digit (MAX - 1)</comment>
+    <block>{
+        <comment type="line">// Setup</comment>
+        <decl_stmt><decl><type><name>bigint</name></type> <name>bi</name><argument_list>(<argument><expr><literal type="string">"12345678901234567890123456789012345678901234567890"</literal></expr></argument>)</argument_list></decl>;</decl_stmt>
+
+        <comment type="line">// Test </comment>
+        <decl_stmt><decl><type><name><name>std</name><operator>::</operator><name>ostringstream</name></name></type> <name>out</name></decl>;</decl_stmt>
+        <expr_stmt><expr><name>out</name> <operator>&lt;&lt;</operator> <name>bi</name></expr>;</expr_stmt>
+
+        <comment type="line">// Verify</comment>
+        <expr_stmt><expr><call><name>assert</name><argument_list>(<argument><expr><call><name><name>out</name><operator>.</operator><name>str</name></name><argument_list>()</argument_list></call> <operator>==</operator> <literal type="string">"12345678901234567890123456789012345678901234567890"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+    }</block>
+
+    <expr_stmt><expr><name><name>std</name><operator>::</operator><name>cout</name></name> <operator>&lt;&lt;</operator> <literal type="string">"Done testing operator&lt;&lt;"</literal> <operator>&lt;&lt;</operator> <name><name>std</name><operator>::</operator><name>endl</name></name></expr>;</expr_stmt>
+    <return>return <expr><literal type="number">0</literal></expr>;</return>
+}</block></function>
+
+</unit>
