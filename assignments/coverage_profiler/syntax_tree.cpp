@@ -294,30 +294,43 @@ void syntax_tree::main_report(std::vector<std::string> & coverage_names) {
 //
 void syntax_tree::instrument_functions(const std::string & coverage_map_name) {
     // WRITE THIS FUNCTION
-	size_t  eachcount = count_elements();
-	 std::list<syntax_tree*>::iterator index = children.begin();
+	size_t  eachcount ;
+	 std::list<syntax_tree*>::iterator index;
          std::list<syntax_tree*>::iterator itr = get_child("function")->get_child("block")->children.begin();
+	 std::list<syntax_tree*>::iterator itr1 =get_child("function")->get_child("block")-> children.begin();
 	//syntax_tree * child;
 
-	while ((*index) -> tag != "function")
-		++index;
-
-
-	if ((*index)->tag == "function"){
-			
-		//children.insert(++itr, new syntax_tree(token, coverage_map_name + ".append(__FUNCTION__, );" ));
+	
+	for ( index = children.begin(); index != children.end(); index++){
 		
+		 if ((*index)->tag == "function"){
+			 eachcount = count_elements();
+                	 children.insert(++itr, new syntax_tree(token, coverage_map_name + ".append(__FUNCTION__, );" ));
 
-		//while ((*itr) -> tag != "expr_stmt" )
-		//	++itr;
+			 for (itr1 = children.begin(); itr1!=children.end(); itr1++){
+
+				if ((*itr1)->tag == "expr_stmt" || (*itr1)->tag == "decl_stmt")
+					children.insert( ++itr1, new syntax_tree(token, coverage_map_name + ".executed(__FUNCTION__, );") );
+				//if((*itr1)->tag == "decl_stmt")
+                                  //children.insert( ++itr1, new syntax_tree(token, coverage_map_name + ".executed(__FUNCTION__, );") );
+				else if((*itr1)->tag == "condition")
+					 children.insert( itr1, new syntax_tree(token, coverage_map_name + ".executed(__FUNCTION__, );") );
+				else;
 
 
-		//if ((*itr) -> tag == "expr_stmt" )
-		//	children.insert( ++itr, new syntax_tree(token, coverage_map_name + ".executed(__FUNCTION__, );") );
-		
-		
-	} 
+			 }
+	                //while ((*itr) -> tag != "expr_stmt" )
+        	        //      ++itr;
 
+
+                	//if ((*itr) -> tag == "expr_stmt" )
+                //      children.insert( ++itr, new syntax_tree(token, coverage_map_name + ".executed(__FUNCTION__, );") );
+
+
+	        }
+
+
+	}
 
 }
 
@@ -328,61 +341,33 @@ void syntax_tree::instrument_functions(const std::string & coverage_map_name) {
 size_t syntax_tree::count_elements() const {
   // WRITE THIS FUNCTION
 	size_t count =1;
-	std::cout<<" I am before for \n";
+	
 	//------------------------------------------
 	std::list<syntax_tree*>::const_iterator index ;
 	
 	
 
-	for (index = children.begin(); ;index++){
-		std::cout<<" I am inside for \n";
-		
-		if (index != children.end()){
-			if ((*index) -> tag == "expr_stmt"){
-				 ++count;
-				return count;
-			}
-
-			else
-				return count = 0;
-		}
+	for (index = children.begin();index != children.end() ;index++){
 			
 		
 		
+		 if ((*index) -> tag == "function" ){
+                        
+			++count;
+		 }
+		//else
+			//count_elements();
 		
+
+			
+			
 		
-		else
-			count_elements();
+			
 
 	}
 
 
-	
-
-	//-------------------------------------------
-	
-	//for (const syntax_tree * child:children){
-
-		//if ( child -> tag == ( "expr_stmt") ) {
-			
-	//	std::cout<<" I am inside for \n";	
-	//		 ++count;
-			
-
-		//}
-
-		//else if ((*index) -> tag == "decl_stmt")
-
-		//	count++;
-		//else
-	//		count_elements();
-
-	//}
-		
-        
-
-
-  return 0;
+  return count;
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -394,35 +379,28 @@ void syntax_tree::instrument_statements(const std::string & coverage_map_name, s
 	current_statement_number = 0;
 	       std::list<syntax_tree*>::iterator itr = get_child("function")->get_child("block")->children.begin();      
                std::list<syntax_tree*>::iterator index = children.begin();         
-	//for (const syntax_tree * child:children){
-		 while ((*index) -> tag != "function")
-	                ++index;
+	
 
+
+	for (index = children.begin(); index!=children.end(); index++){
 		if ((*index)-> tag == "function"){
 
-                	while ((*itr) -> tag != "expr_stmt" )
-				++itr;
-			if ( (*itr) -> tag == "expr_stmt" ) {
-			//while ((*itr)->tag != "{" )
-			//	++itr;
-			//if ((*itr)->tag == "{")
-                             children.insert(++itr, new syntax_tree(token, coverage_map_name+".executed(__FUNCTION__, );"));
-			     current_statement_number++;
+			if ((*itr)->tag == "expr_stmt" || (*itr)->tag == "decl_stmt"){
+                                  children.insert( ++itr, new syntax_tree(token, coverage_map_name + ".executed(__FUNCTION__, );") );
+				  current_statement_number++;
 			}
-			//else
-			//	++itr;
-			
-                }
+			if((*itr)->tag == "condition"){
+                                  children.insert( itr, new syntax_tree(token, coverage_map_name + ".executed(__FUNCTION__, );") );
+				  current_statement_number++;
+			}
+
+		}
+                                
+		else
+			instrument_statements(coverage_map_name,current_statement_number);
 
 
-                else
-                        instrument_statements(coverage_map_name,current_statement_number);
-
-        //}
-
-
-        
-
+	}
 
 
 
