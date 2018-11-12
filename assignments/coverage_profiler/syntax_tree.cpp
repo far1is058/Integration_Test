@@ -6,7 +6,7 @@
  *  Copyright 2018 Bowling Green State University. All rights reserved.
  *
  */
-
+#include <iostream>
 #include "syntax_tree.hpp"
 
 /////////////////////////////////////////////////////////////////////
@@ -208,7 +208,7 @@ void syntax_tree::main_header(std::vector<std::string> & coverage_names) {
 	children.insert(index, new syntax_tree(token, "coverage_map_t " + coverage_names[0] + "(\"simple_main.cpp\");" + "\n"));
 	children.insert(index, new syntax_tree(token, "coverage_map_t " + coverage_names[1] + "(\"foo.cpp\");" + "\n"));
 	
-
+	//children.insert(index, new syntax_tree(token, "This count = " + *count_elements() + "\n"));
 
 
 
@@ -229,8 +229,8 @@ void syntax_tree::file_header(const std::string & coverage_map_name) {
         }
         
         children.insert(index, new syntax_tree(token, "#include \"coverage_map.hpp\"\n"));
-        children.insert(index, new syntax_tree(token, "extern coverage_map_t foo_cpp;\n"));
-
+        children.insert(index, new syntax_tree(token, "extern coverage_map_t " + coverage_map_name + ";\n"));
+	//children.insert(index, new syntax_tree(token, "extern coverage_map_t foo_cpp;\n"));
 
 
 }
@@ -309,6 +309,31 @@ void syntax_tree::main_report(std::vector<std::string> & coverage_names) {
 //
 void syntax_tree::instrument_functions(const std::string & coverage_map_name) {
     // WRITE THIS FUNCTION
+	size_t  eachcount = count_elements();
+	 std::list<syntax_tree*>::iterator index = children.begin();
+         std::list<syntax_tree*>::iterator itr = get_child("function")->get_child("block")->children.begin();
+	//syntax_tree * child;
+
+	while ((*index) -> tag != "function")
+		++index;
+
+
+	if ((*index)->tag == "function"){
+			
+		children.insert(++itr, new syntax_tree(token, coverage_map_name + ".append(__FUNCTION__, );" ));
+		
+
+		//while ((*itr) -> tag != "expr_stmt" )
+		//	++itr;
+
+
+		//if ((*itr) -> tag == "expr_stmt" )
+		//	children.insert( ++itr, new syntax_tree(token, coverage_map_name + ".executed(__FUNCTION__, );") );
+		
+		
+	} 
+
+
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -317,6 +342,61 @@ void syntax_tree::instrument_functions(const std::string & coverage_map_name) {
 //
 size_t syntax_tree::count_elements() const {
   // WRITE THIS FUNCTION
+	size_t count =1;
+	std::cout<<" I am before for \n";
+	//------------------------------------------
+	std::list<syntax_tree*>::const_iterator index ;
+	
+	
+
+	for (index = children.begin(); ;index++){
+		std::cout<<" I am inside for \n";
+		
+		if (index != children.end()){
+			if ((*index) -> tag == "expr_stmt"){
+				 ++count;
+				return count;
+			}
+
+			else
+				return count = 0;
+		}
+			
+		
+		
+		
+		
+		else
+			count_elements();
+
+	}
+
+
+	
+
+	//-------------------------------------------
+	
+	//for (const syntax_tree * child:children){
+
+		//if ( child -> tag == ( "expr_stmt") ) {
+			
+	//	std::cout<<" I am inside for \n";	
+	//		 ++count;
+			
+
+		//}
+
+		//else if ((*index) -> tag == "decl_stmt")
+
+		//	count++;
+		//else
+	//		count_elements();
+
+	//}
+		
+        
+
+
   return 0;
 }
 
@@ -326,6 +406,43 @@ size_t syntax_tree::count_elements() const {
 //
 void syntax_tree::instrument_statements(const std::string & coverage_map_name, size_t& current_statement_number) {
     // WRITE THIS FUNCTION
+	current_statement_number = 0;
+	       std::list<syntax_tree*>::iterator itr = get_child("function")->get_child("block")->children.begin();      
+               std::list<syntax_tree*>::iterator index = children.begin();         
+	//for (const syntax_tree * child:children){
+		 while ((*index) -> tag != "function")
+	                ++index;
+
+		if ((*index)-> tag == "function"){
+
+                	while ((*itr) -> tag != "expr_stmt" )
+				++itr;
+			if ( (*itr) -> tag == "expr_stmt" ) {
+			//while ((*itr)->tag != "{" )
+			//	++itr;
+			//if ((*itr)->tag == "{")
+                             children.insert(++itr, new syntax_tree(token, coverage_map_name+".executed(__FUNCTION__, );"));
+			     current_statement_number++;
+			}
+			//else
+			//	++itr;
+			
+                }
+
+
+                else
+                        instrument_statements(coverage_map_name,current_statement_number);
+
+        //}
+
+
+        
+
+
+
+
+
+
 }
 
 /////////////////////////////////////////////////////////////////////
