@@ -243,53 +243,38 @@ void syntax_tree::file_header(const std::string & coverage_map_name) {
 void syntax_tree::main_report(std::vector<std::string> & coverage_names) {
     // WRITE THIS FUNCTION	     
 
-	std::list<syntax_tree*>::iterator index = children.begin();
+	std::list<syntax_tree*>::iterator index;// = children.begin();
 	std::list<syntax_tree*>::iterator itr = get_child("function")->get_child("block")->children.begin();	 
 	
+	
+	for (index=children.begin(); index!=children.end();index++){
 
+		if(((*index)->tag == "function")&&((*index)->get_child("name")->get_name() == "main")){
+
+			while((*itr)->tag != "return"){
+
+                                ++itr;
+				
+
+                        }
+
+			 if ((*itr)->tag == "return"){
+
+                                        children.insert(itr, new syntax_tree(token, coverage_names[0]+".print();"+coverage_names[1]+".print();"));
+                                        
+                                }
+
+
+
+		}
+
+	}
 	
 
         
 
 
-        // Iterate until I find a function!
-        while ((*index)->tag != "function") {
-       	        ++index;
 
-        }
-	
-	
-	
-
-	
-	while ((*index)->tag == "function"){
-	
-		if((*index)->get_child("name")->get_name() == "main"){
-					
-		 	while((*itr)->tag != "return"){
-	
-				++itr;		
-
-
-			}
-			
-
-
-			
-				if ((*itr)->tag == "return"){
-			
-					children.insert(itr, new syntax_tree(token, coverage_names[0]+".print();"+coverage_names[1]+".print();"));
-					break;
-				}
-
-					
-					
-		} 
-
-
-		else
-			++index;
-	}
 					
 	
 
@@ -320,7 +305,7 @@ void syntax_tree::instrument_functions(const std::string & coverage_map_name) {
 
 	if ((*index)->tag == "function"){
 			
-		children.insert(++itr, new syntax_tree(token, coverage_map_name + ".append(__FUNCTION__, );" ));
+		//children.insert(++itr, new syntax_tree(token, coverage_map_name + ".append(__FUNCTION__, );" ));
 		
 
 		//while ((*itr) -> tag != "expr_stmt" )
