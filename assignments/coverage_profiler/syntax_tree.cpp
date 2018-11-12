@@ -294,37 +294,31 @@ void syntax_tree::main_report(std::vector<std::string> & coverage_names) {
 //
 void syntax_tree::instrument_functions(const std::string & coverage_map_name) {
     // WRITE THIS FUNCTION
-	size_t  eachcount ;
+	//size_t  eachcount ;
 	 std::list<syntax_tree*>::iterator index;
          std::list<syntax_tree*>::iterator itr = get_child("function")->get_child("block")->children.begin();
 	 std::list<syntax_tree*>::iterator itr1 =get_child("function")->get_child("block")-> children.begin();
-	//syntax_tree * child;
+	
 
 	
 	for ( index = children.begin(); index != children.end(); index++){
 		
 		 if ((*index)->tag == "function"){
-			 eachcount = count_elements();
+			// eachcount = count_elements();
                 	 children.insert(++itr, new syntax_tree(token, coverage_map_name + ".append(__FUNCTION__, );" ));
 
 			 for (itr1 = children.begin(); itr1!=children.end(); itr1++){
 
 				if ((*itr1)->tag == "expr_stmt" || (*itr1)->tag == "decl_stmt")
 					children.insert( ++itr1, new syntax_tree(token, coverage_map_name + ".executed(__FUNCTION__, );") );
-				//if((*itr1)->tag == "decl_stmt")
-                                  //children.insert( ++itr1, new syntax_tree(token, coverage_map_name + ".executed(__FUNCTION__, );") );
-				else if((*itr1)->tag == "condition")
+				
+				 if((*itr1)->tag == "condition")
 					 children.insert( itr1, new syntax_tree(token, coverage_map_name + ".executed(__FUNCTION__, );") );
-				else;
+				
 
 
 			 }
-	                //while ((*itr) -> tag != "expr_stmt" )
-        	        //      ++itr;
-
-
-                	//if ((*itr) -> tag == "expr_stmt" )
-                //      children.insert( ++itr, new syntax_tree(token, coverage_map_name + ".executed(__FUNCTION__, );") );
+	                
 
 
 	        }
