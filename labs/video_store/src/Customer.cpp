@@ -40,34 +40,29 @@ double Customer::getTotalCharge() const {
 
 }
 
-//int Customer::getFrequentRenterPoints(Rental n) const {
-        //int frequentRenterPoints = 0;
-	// add frequent renter points
-        //return frequentRenterPoints++;
-        // add bonus for a two day new release rental
-  //      if ((n.getMovie().getPriceCode() == Movie::NEW_RELEASE) &&
-    //        n.getDaysRented() > 1) return 2;
-//	else
-//		return 1;
+int Customer::getTotalFrequentRenterPoints() const {
+    int total = 0;
+    for(std::vector<Rental>::const_iterator it = rentals.begin(); it != rentals.end(); ++it){
 
-//}
+        Rental each = (Rental) *it;
+        total += each.getFrequentRenterPoints();
+    }
+
+    return total;
+}
 
 
 // customer rental statement
 std::string Customer::statement() const {
     
-    int frequentRenterPoints = 0;
+   // int frequentRenterPoints = 0;
     std::string result = "Rental Record for " + getName() + "\n";
     for(std::vector<Rental>::const_iterator it = rentals.begin(); it != rentals.end(); ++it) {
         Rental each = (Rental) *it;
-	frequentRenterPoints += each.getFrequentRenterPoints();
+	//frequentRenterPoints += each.getFrequentRenterPoints();
         
 
-	// add frequent renter points
-        //++frequentRenterPoints;
-        // add bonus for a two day new release rental
-     //   if ((each.getMovie().getPriceCode() == Movie::NEW_RELEASE) &&
-       //     each.getDaysRented() > 1) each.getfrequentRenterPoints();
+	
 
         //show figures for this rental
         result += "\t" + each.getMovie().getTitle()+ "\t";
@@ -89,7 +84,7 @@ std::string Customer::statement() const {
     // frequent renter points earned
     result += "You earned: ";
     std::ostringstream frequent_stream;
-    frequent_stream << frequentRenterPoints;
+    frequent_stream << getTotalFrequentRenterPoints();//frequentRenterPoints;
     result += frequent_stream.str();
     result += " frequent renter points\n";
 

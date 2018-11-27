@@ -32,7 +32,7 @@ public:
     std::string statement() const;
    // int getFrequentRenterPoints(Rental n) const;
     double getTotalCharge() const;
-
+    int getTotalFrequentRenterPoints() const;
 };
 
 #endif
