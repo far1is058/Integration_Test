@@ -7,9 +7,11 @@
 #include "Movie.hpp"
 
 // constructor
-Movie::Movie(const std::string& title, int price_code)
-    : title(title), price_code(price_code)
-{ }
+Movie::Movie(const std::string& name, int priceCode){
+  
+  title = name;
+  setPriceCode(priceCode);
+}
 
 // movie price code
 int Movie::getPriceCode() const {
