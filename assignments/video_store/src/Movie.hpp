@@ -35,6 +35,10 @@ public:
 
     // getcharge moved from Rental to Movie
     double getCharge(int) const;
+    
+    int getFrequentRenterPoints(int) const;
+
+
 };
 
 #endif

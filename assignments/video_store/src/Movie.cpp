@@ -53,6 +53,15 @@ double Movie::getCharge(int numOfDaysRented) const{
 
 }
 
+int Movie::getFrequentRenterPoints(int numOfDaysRented) const {
+           // add bonus for a two day new release rental
+        if ((getPriceCode() == Movie::NEW_RELEASE) &&
+            numOfDaysRented > 1) return 2;
+        else
+                return 1;
+
+}
+
 
 
 
