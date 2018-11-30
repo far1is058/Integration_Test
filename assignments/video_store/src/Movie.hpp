@@ -19,7 +19,7 @@ public:
 private:
     std::string title;
     int price_code;
-
+    
 public:
     // constructor
     Movie(const std::string& title, int price_code);

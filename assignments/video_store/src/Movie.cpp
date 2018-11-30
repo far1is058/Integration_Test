@@ -5,6 +5,10 @@
 */
 
 #include "Movie.hpp"
+//#include "Price.hpp"
+//#include "NewReleasePrice.hpp"
+//#include "ChilrenPrice.hpp"
+//#include "RegularPrice.hpp"
 
 // constructor
 Movie::Movie(const std::string& name, int priceCode){
@@ -12,17 +16,39 @@ Movie::Movie(const std::string& name, int priceCode){
   title = name;
   setPriceCode(priceCode);
 }
-
+ 
 // movie price code
 int Movie::getPriceCode() const {
 
     return price_code;
 }
 
-// set movie price code
-void Movie::setPriceCode(int new_price_code) {
+// void Movie::operator=(const Movie &M ) { 
+        //m1 = M.m1;
+        //m2 = M.m2;
+  //  }
 
-    price_code = new_price_code;
+
+// set movie price code
+void Movie::setPriceCode(int arg) {
+    switch(arg) {
+	case REGULAR:
+	     price_code = new RegularPrice();
+	     break;
+
+	case CHILDRENS:
+	     price_code = new ChildrenPrice();
+	     break;
+
+	case NEW_RELEASE:
+	     price_code = new NewReleasePrice();
+	     break;
+	
+	default:;	     
+
+
+    }
+    
 }
 
 // movie title
