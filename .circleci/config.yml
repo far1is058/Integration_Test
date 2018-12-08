@@ -1,4 +1,4 @@
- Simple CircleCI config
+# Simple CircleCI config
  version: 2
  jobs: 
   build:
