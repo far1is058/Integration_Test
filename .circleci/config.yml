@@ -1,9 +1,9 @@
 # Simple CircleCI config
- version: 2
+version: 2
  jobs: 
-  build:
-    docker: 
-      - image: srcml/ubuntu_x86_64_base
-    steps:
-      - checkout
-      - run: cd labs/video_store/src && make tests
+  build: 
+  docker: 
+   - image: srcml/ubuntu_x86_64_base
+  steps:
+   - checkout
+     - run: cd labs/video_store/src && make tests
